@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """
-Fabric script to genereate tgz archive
-execute: fab -f 1-pack_web_static.py do_pack
+Fab file to compress a file and send to server
 """
 
 from datetime import datetime

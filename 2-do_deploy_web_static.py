@@ -1,30 +1,29 @@
 #!/usr/bin/python3
 """
-Fabric script based on the file 1-pack_web_static.py that distributes an
-archive to the web servers
+Fab file to deploy static web on server
 """
 
 from fabric.api import put, run, env
 from os.path import exists
-env.hosts = ['54.89.109.87', '100.25.190.21']
+env.hosts = ['54.236.43.198', '54.175.134.96']
 
 
-def do_deploy(archive_path):
+def do_deploy(arch):
     """distributes an archive to the web servers"""
-    if exists(archive_path) is False:
+    if exists(arch) is False:
         return False
     try:
-        file_n = archive_path.split("/")[-1]
-        no_ext = file_n.split(".")[0]
+        file_num = arch.split("/")[-1]
+        no_exit = file_num.split(".")[0]
         path = "/data/web_static/releases/"
-        put(archive_path, '/tmp/')
-        run('mkdir -p {}{}/'.format(path, no_ext))
-        run('tar -xzf /tmp/{} -C {}{}/'.format(file_n, path, no_ext))
-        run('rm /tmp/{}'.format(file_n))
-        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
-        run('rm -rf {}{}/web_static'.format(path, no_ext))
+        put(arch, '/tmp/')
+        run('mkdir -p {}{}/'.format(path, no_exit))
+        run('tar -xzf /tmp/{} -C {}{}/'.format(file_num, path, no_exit))
+        run('rm /tmp/{}'.format(file_num))
+        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_exit))
+        run('rm -rf {}{}/web_static'.format(path, no_exit))
         run('rm -rf /data/web_static/current')
-        run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
+        run('ln -s {}{}/ /data/web_static/current'.format(path, no_exit))
         return True
     except:
         return False
